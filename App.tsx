@@ -5,7 +5,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NativeBaseProvider } from 'native-base';
 import Home from './src';
-import QuestionScreen from './src/telas/Questionario';
+import Questionario from './src/telas/Questionario';
 import Resultado from './src/telas/Resultado';
 
 const Drawer = createDrawerNavigator();
@@ -22,10 +22,10 @@ const MainStack =() => {
       />
       <Stack.Screen 
         name="Questionario" 
-        component={QuestionScreen} 
+        component={Questionario}
         options={{
           title: 'Questionário',
-          headerBackTitleVisible: false, // Oculta o texto "Voltar"
+          headerShown: false
         }}
       />
       <Stack.Screen 
@@ -33,7 +33,6 @@ const MainStack =() => {
         component={Resultado} 
         options={{
           title: 'Resultado',
-          headerBackTitleVisible: false, // Oculta o texto "Voltar"
           headerShown: false
         }}
       />
@@ -45,8 +44,8 @@ const  App = () => {
   return (
     <NativeBaseProvider>
       <NavigationContainer>
-        <Drawer.Navigator initialRouteName="Home">
-          <Drawer.Screen name="Home" component={MainStack} options={{ title: 'Início' }} />
+        <Drawer.Navigator initialRouteName="HomeDrawer">
+          <Drawer.Screen name="HomeDrawer" component={MainStack} options={{ title: 'Início' }} />
         </Drawer.Navigator>
       </NavigationContainer>
     </NativeBaseProvider>

@@ -1,45 +1,59 @@
+import { Perguntas, type Respostas, type resultado, Tecnologias } from "../interfaces/Perguntas";
+
 export interface Pergunta {
-    pergunta: string;
-    sim: string; // ID da próxima pergunta ou resultadoado
-    nao: string;  // ID da próxima pergunta ou resultadoado
+    pergunta: Perguntas;
+    sim: keyof typeof Respostas | keyof typeof Perguntas; // ID da próxima pergunta ou resultado
+    nao: keyof typeof Respostas | keyof typeof Perguntas;  // ID da próxima pergunta ou resultado
 }
 
-export interface resultado {
-    resultado: string[]; // Lista de tecnologias recomendadas
-}
-
-export const perguntas: { [key: string]: Pergunta } = {
-    "1": {
-        pergunta: "Tem Disponibilidade Hídrica?",
-        sim: "2",
-        nao: "5",
+export const perguntas: Record<keyof typeof Perguntas, Pergunta> = {
+    TemDisponibilidadeHídrica: {
+        pergunta: Perguntas.TemDisponibilidadeHídrica,
+        sim: "SeparaAGuasCinzasEAGuasNegras",
+        nao: "TemInteresseEmAproveitarAguaEmFertirrigacaoCompostoeUrina",
     },
-    "2": {
-        pergunta: "Separa Águas Cinzas e Águas Negras?",
-        sim: "3",
-        nao: "6",
+    SeparaAGuasCinzasEAGuasNegras: {
+        pergunta: Perguntas.SeparaAGuasCinzasEAGuasNegras,
+        sim: "TemInteresseEmPromoverPaisagismo",
+        nao: "TemInteresseEmAproveitarBiogas",
     },
-    "3": {
-        pergunta: "Tem Interesse em Aproveitar Biogás?",
-        sim: "resultado_biogester",
-        nao: "4",
+    TemInteresseEmPromoverPaisagismo: {
+        pergunta: Perguntas.TemInteresseEmPromoverPaisagismo,
+        sim: "resultado_Wetland_TanqueEvapotranspiracao",
+        nao: "resultado_bananeira",
     },
-    "4": {
-        pergunta: "Tem Interesse em Promover Paisagismo?",
-        sim: "resultado_bananeira",
-        nao: "resultado_wetland",
+    TemAcessoAoServicoDoCaminhaoLimpaFossa: {
+        pergunta: Perguntas.TemAcessoAoServicoDoCaminhaoLimpaFossa,
+        sim: "resultado_tanqueseptico_reatorAnaerobioCompartilhado_ReatorAnaerobioDeFluxoAscendenteCompacto",
+        nao: "TemInteresseEmAproveitarComposto",
     },
-    "5": {
-        pergunta: "Tem Acesso ao Serviço do Caminhão Limpa Fossa?",
-        sim: "resultado_fossaseca",
-        nao: "resultado_compostagem",
-    }
+    TemInteresseEmAproveitarBiogas: {
+        pergunta: Perguntas.TemInteresseEmAproveitarBiogas,
+        sim: "resultado_biodigestor",
+        nao: "TemAcessoAoServicoDoCaminhaoLimpaFossa",
+    },
+    TemInteresseEmAproveitarComposto: {
+        pergunta: Perguntas.TemInteresseEmAproveitarComposto,
+        sim: "resultado_vermifiltro",
+        nao: "resultado_biodigestor",
+    },
+    TemInteresseEmAproveitarAguaEmFertirrigacaoCompostoeUrina: {
+        pergunta: Perguntas.TemInteresseEmAproveitarAguaEmFertirrigacaoCompostoeUrina,
+        sim: "resultado_estocagem_urina_banheiro_compostavel_wetland",
+        nao: "resultado_fossa_seca_Ciclo_babaneniras",
+    },
 };
 
-export const resultados: { [key: string]: resultado } = {
-    resultado_biogester: { resultado: ["Biodigestor"] },
-    resultado_bananeira: { resultado: ["Ciclo de Bananeiras"] },
-    resultado_wetland: { resultado: ["Wetland"] },
-    resultado_fossaseca: { resultado: ["Fossa Seca"] },
-    resultado_compostagem: { resultado: ["Banheiro Seco Compostável"] }
+export const resultados: Record<keyof typeof Respostas, resultado> = {
+    resultado_Wetland_TanqueEvapotranspiracao: { resultado: [Tecnologias.Biodigestor, Tecnologias.BanheiroSecoCompostavel] },
+    resultado_bananeira: { resultado: [Tecnologias.CicloDeBananeiras] },
+    resultado_wetland: { resultado: [Tecnologias.Wetland] },
+    resultado_fossaseca: { resultado: [Tecnologias.FossaSeca] },
+    resultado_compostagem: { resultado: [Tecnologias.BanheiroSecoCompostavel] },
+    resultado_biodigestor: { resultado: [Tecnologias.Biodigestor] },
+    resultado_tanqueseptico_reatorAnaerobioCompartilhado_ReatorAnaerobioDeFluxoAscendenteCompacto: { resultado: [Tecnologias.TanqueSeptico, Tecnologias.ReatorAnaerobioCompartilhado, Tecnologias.ReatorAnaerobioDeFluxoAscendenteCompacto] },
+    resultado_vermifiltro: { resultado: [Tecnologias.Vermifiltro] },
+    resultado_fossaSepticaBiodigestora: { resultado: [Tecnologias.FossaSeptivaBiodigestora] },
+    resultado_fossa_seca_Ciclo_babaneniras: { resultado: [Tecnologias.FossaSeca, Tecnologias.CicloDeBananeiras] },
+    resultado_estocagem_urina_banheiro_compostavel_wetland: { resultado: [Tecnologias.EstocagemDeUrina, Tecnologias.BanheiroSecoCompostavel, Tecnologias.Wetland] },
 };
