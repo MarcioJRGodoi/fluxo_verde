@@ -1,8 +1,9 @@
 {
   "expo": {
+    "jsEngine": "hermes",
     "name": "fluxo-verde",
     "slug": "fluxo-verde",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -16,6 +17,7 @@
     },
     "android": {
       "adaptiveIcon": {
+        "releaseChannel": "default",
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },

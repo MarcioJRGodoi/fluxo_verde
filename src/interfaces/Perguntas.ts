@@ -16,55 +16,6 @@ export enum Tecnologias {
     EstocagemDeUrina = "Estocagem de Urina",
 }
 
-// Mapeamento de tecnologias para arrays de caminhos de imagem
-export const tecnologiaImagens: Record<Tecnologias, string[]> = {
-    [Tecnologias.Biodigestor]: [
-        "/images/biodigestor_1.png",
-        "/images/biodigestor_2.png",
-        "/images/biodigestor_3.png"
-    ],
-    [Tecnologias.CicloDeBananeiras]: [
-        "/images/ciclo_de_bananeiras_1.png",
-        "/images/ciclo_de_bananeiras_2.png"
-    ],
-    [Tecnologias.Wetland]: [
-        "/images/wetland_1.png",
-        "/images/wetland_2.png"
-    ],
-    [Tecnologias.FossaSeca]: [
-        "/images/fossa_seca_1.png",
-        "/images/fossa_seca_2.png"
-    ],
-    [Tecnologias.BanheiroSecoCompostavel]: [
-        "/images/banheiro_seco_compostavel_1.png",
-        "/images/banheiro_seco_compostavel_2.png"
-    ],
-    [Tecnologias.TanqueEvapotranspiracao]: [
-        "/images/tanque_evapotranspiracao_1.png"
-    ],
-    [Tecnologias.BiossistemaIntegrado]: [
-        "/images/biossistema_integrado_1.png"
-    ],
-    [Tecnologias.TanqueSeptico]: [
-        "/images/tanque_septico_1.png"
-    ],
-    [Tecnologias.ReatorAnaerobioCompartilhado]: [
-        "/images/reator_anaerobio_compartilhado_1.png"
-    ],
-    [Tecnologias.ReatorAnaerobioDeFluxoAscendenteCompacto]: [
-        "/images/reator_anaerobio_fluxo_ascendente_compacto_1.png"
-    ],
-    [Tecnologias.Vermifiltro]: [
-        "/images/vermifiltro_1.png"
-    ],
-    [Tecnologias.FossaSeptivaBiodigestora]: [
-        "/images/fossa_septica_biodigestora_1.png"
-    ],
-    [Tecnologias.EstocagemDeUrina]: [
-        "/images/estocagem_de_urina_1.png"
-    ],
-};
-
 
 export interface resultado {
     resultado: Tecnologias[]; // Lista de tecnologias recomendadas
@@ -99,11 +50,19 @@ export enum Respostas {
 }
 
 
-export interface Route {
-    name: string;
-    key: string;
+export interface Route_PerguntasRespostas {
+    name?: string;
+    key?: string;
     params: {
-        perguntaId: keyof typeof Perguntas;
-        resultadoId: keyof typeof Respostas;
+        perguntaId?: keyof typeof Perguntas;
+        resultadoId?: keyof typeof Respostas;
+    };
+}
+
+export interface Route_Detalhes {
+    name?: string;
+    key?: string;
+    params: {
+        tecnologiaId: keyof typeof Tecnologias;
     };
 }
