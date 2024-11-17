@@ -211,20 +211,36 @@ export const tecnologiaImagens: Record<Tecnologias, string[]> = {
         require("../images/Biodigestor.png"),
     ],
     [Tecnologias.CicloDeBananeiras]: [
+        require("../images/CicloDeBananeiras1.png"),
+        require("../images/CicloDeBananeiras2.png"),
+        require("../images/CicloDeBananeiras3.jpg"),
     ],
     [Tecnologias.Wetland]: [
+        require("../images/Wetland1.jpg"),
+        require("../images/Wetland2.jpg"),
+        require("../images/Wetland3.png"),
     ],
     [Tecnologias.FossaSeca]: [
+        require("../images/FossaSeca1.jpg"),
     ],
     [Tecnologias.BanheiroSecoCompostavel]: [
+        require("../images/BanheiroSecoCompostavel1.jpg"),
+        require("../images/BanheiroSecoCompostavel2.jpg"),
     ],
     [Tecnologias.TanqueEvapotranspiracao]: [
+        require("../images/TanqueEvapotranspiracao1.png"),
+        require("../images/TanqueEvapotranspiracao2.jpeg"),
+        require("../images/TanqueEvapotranspiracao3.jpg")
     ],
     [Tecnologias.BiossistemaIntegrado]: [
+        require("../images/BiossistemaIntegrado1.gif"),
     ],
     [Tecnologias.TanqueSeptico]: [
+        require("../images/TanqueSeptico.webp"),
+        require("../images/TanqueSeptico2.jpg")
     ],
     [Tecnologias.ReatorAnaerobioCompartilhado]: [
+        require("../images/ReatorAnaerobioCompartilhado1.png")
     ],
     [Tecnologias.ReatorAnaerobioDeFluxoAscendenteCompacto]: [
     ],

@@ -14,7 +14,7 @@ const Detalhes: React.FC<{ route: Route_Detalhes }> = ({ route }) => {
 
   // Funções de placeholder
   const verImagens = () => navigation.navigate("Imagens", { tecnologiaId: tecnologia });
-  const visualizacao3D = () => alert("Funcionalidade em desenvolvimento: Visualização 3D");
+  const visualizacao3D = () => navigation.navigate("ThreeDViewer");
   const visualizacaoVR_AR = () => navigation.navigate("PanoramaViewer", { tecnologiaId: tecnologia });
   const explicacaoDetalhada = () => navigation.navigate("Implementacao", { tecnologiaId: tecnologia });
 

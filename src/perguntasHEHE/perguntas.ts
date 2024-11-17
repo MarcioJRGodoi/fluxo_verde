@@ -45,7 +45,7 @@ export const perguntas: Record<keyof typeof Perguntas, Pergunta> = {
 };
 
 export const resultados: Record<keyof typeof Respostas, resultado> = {
-    resultado_Wetland_TanqueEvapotranspiracao: { resultado: [Tecnologias.Biodigestor, Tecnologias.BanheiroSecoCompostavel] },
+    resultado_Wetland_TanqueEvapotranspiracao: { resultado: [Tecnologias.Wetland, Tecnologias.TanqueEvapotranspiracao, Tecnologias.BiossistemaIntegrado] },
     resultado_bananeira: { resultado: [Tecnologias.CicloDeBananeiras] },
     resultado_wetland: { resultado: [Tecnologias.Wetland] },
     resultado_fossaseca: { resultado: [Tecnologias.FossaSeca] },

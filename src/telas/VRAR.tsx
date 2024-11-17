@@ -1,65 +1,70 @@
-import React, { useRef, useEffect } from 'react';
+import type React from 'react';
+import { useRef } from 'react';
 import { View, Dimensions, PanResponder } from 'react-native';
 import { GLView } from 'expo-gl';
 import * as THREE from 'three';
 import { Renderer } from 'expo-three';
+import { Asset } from 'expo-asset';
 
 const PanoramaViewer: React.FC = () => {
   const glViewRef = useRef(null);
-
   const { width, height } = Dimensions.get('window');
 
-  // Referências globais para câmera, cena e esfera
   let camera: THREE.PerspectiveCamera;
   let scene: THREE.Scene;
   let renderer: Renderer;
   let sphere: THREE.Mesh;
 
-  // PanResponder para manipular gestos
   const panResponder = useRef(
     PanResponder.create({
       onMoveShouldSetPanResponder: () => true,
       onPanResponderMove: (_, gesture) => {
         if (sphere) {
-          sphere.rotation.y -= gesture.dx * 0.005; // Rotação horizontal
-          sphere.rotation.x -= gesture.dy * 0.005; // Rotação vertical
+          sphere.rotation.y -= gesture.dx * 0.005;
+          sphere.rotation.x = THREE.MathUtils.clamp(
+            sphere.rotation.x - gesture.dy * 0.005,
+            -Math.PI / 2,
+            Math.PI / 2
+          );
         }
       },
     })
   ).current;
 
   const createPanorama = async (gl: any) => {
-    // Configuração inicial do renderer
     renderer = new Renderer({ gl });
     renderer.setSize(width, height);
 
-    // Criar a cena e a câmera
     scene = new THREE.Scene();
+    scene.background = new THREE.Color(0x000000); // Fundo preto para verificar renderização
+
     camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
-    camera.position.z = 0.1;
+    camera.position.z = 0.1; // Posição dentro da esfera
 
-    // Carregar a textura da imagem panorâmica
     const textureLoader = new THREE.TextureLoader();
-    const texture = await textureLoader.loadAsync(
-      require('../../assets/2294472375_24a3b8ef46_o.jpg') // Substitua pelo caminho da sua imagem
-    );
+    const imageAsset = Asset.fromModule(require('../../assets/imagens/2294472375_24a3b8ef46_o.jpg'));
+    await imageAsset.downloadAsync();
 
-    // Criar a esfera
-    const geometry = new THREE.SphereGeometry(500, 60, 40);
-    const material = new THREE.MeshBasicMaterial({
-      map: texture,
-      side: THREE.BackSide, // Renderizar a parte interna da esfera
-    });
+    const texture = await textureLoader
+      .loadAsync(imageAsset.localUri || imageAsset.uri)
+      .catch((error) => {
+        console.error("Erro ao carregar textura:", error);
+        return null;
+      });
+
+    const fallbackMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 }); // Material vermelho como fallback
+    const material = texture
+      ? new THREE.MeshBasicMaterial({ map: texture, side: THREE.BackSide })
+      : fallbackMaterial;
+
+    const geometry = new THREE.SphereGeometry(10, 60, 40);
     sphere = new THREE.Mesh(geometry, material);
-
-    // Adicionar a esfera à cena
     scene.add(sphere);
 
-    // Função de renderização
     const renderScene = () => {
       requestAnimationFrame(renderScene);
       renderer.render(scene, camera);
-      gl.endFrameEXP(); // Finaliza o frame no Expo GL
+      gl.endFrameEXP();
     };
 
     renderScene();

@@ -30,6 +30,10 @@
       "eas": {
         "projectId": "2f4939c9-98f8-47cc-a332-b30f9464bb75"
       }
-    }
+    },
+    "assetBundlePatterns": [
+      "**/*",
+      "src/models/galinha.glb"
+    ]
   }
 }
