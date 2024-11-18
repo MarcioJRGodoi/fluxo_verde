@@ -11,7 +11,6 @@ import Duvidas from './src/telas/Duvidas';
 import Detalhes from './src/telas/Detalhes';
 import Imagens from './src/telas/Imagens';
 import Implementacao from './src/telas/Implementacao';
-import PanoramaViewer from './src/telas/VRAR';
 import ThreeDViewer from './src/telas/ThreeDViewer';
 
 const Drawer = createDrawerNavigator();
@@ -66,14 +65,14 @@ const MainStack = () => {
           headerShown: false
         }}
       />
-      <Stack.Screen
+      {/* <Stack.Screen
         name="PanoramaViewer"
         component={PanoramaViewer}
         options={{
           title: 'PanoramaViewer',
           headerShown: false
         }}
-      />
+      /> */}
       <Stack.Screen
         name="ThreeDViewer"
         component={ThreeDViewer}

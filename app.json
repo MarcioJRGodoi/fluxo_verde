@@ -17,11 +17,14 @@
     },
     "android": {
       "adaptiveIcon": {
-        "releaseChannel": "default",
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.tomamaguke.fluxoverde"
+      "package": "com.tomamaguke.fluxoverde",
+      "permissions": [
+        "READ_EXTERNAL_STORAGE",
+        "WRITE_EXTERNAL_STORAGE"
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -34,6 +37,9 @@
     "assetBundlePatterns": [
       "**/*",
       "src/models/galinha.glb"
+    ],
+    "plugins": [
+      "expo-asset"
     ]
   }
 }

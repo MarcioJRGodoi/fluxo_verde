@@ -54,9 +54,9 @@ const Detalhes: React.FC<{ route: Route_Detalhes }> = ({ route }) => {
               </Button>
             </HStack>
             <HStack space={2} w="100%" justifyContent="center">
-              <Button onPress={visualizacaoVR_AR} colorScheme="blue" flex={1} _text={{ fontSize: 'sm' }} _pressed={{ bg: 'blue.700' }}>
+              {/* <Button onPress={visualizacaoVR_AR} colorScheme="blue" flex={1} _text={{ fontSize: 'sm' }} _pressed={{ bg: 'blue.700' }}>
                 Visualização VR/AR
-              </Button>
+              </Button> */}
               <Button onPress={explicacaoDetalhada} colorScheme="blue" flex={1} _text={{ fontSize: 'sm' }} _pressed={{ bg: 'blue.700' }}>
                 Explicação Detalhada
               </Button>
