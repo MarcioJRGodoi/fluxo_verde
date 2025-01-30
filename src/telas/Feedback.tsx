@@ -15,9 +15,9 @@ const FeedbackScreen: React.FC = () => {
 
     const formUrl = 'https://docs.google.com/forms/u/0/d/e/1FAIpQLSfktpFzZarT_AlUJjdPZFe4qxE8vh0Ba25ARvby_AZUvzGJeA/formResponse';
     const formData = new URLSearchParams();
-    formData.append('entry.1642770719', name); // ID do campo "Nome"
-    formData.append('entry.1920178706', email); // ID do campo "Email"
-    formData.append('entry.2118205607', message); // ID do campo "Mensagem"
+    formData.append('entry.1642770719', name);
+    formData.append('entry.1920178706', email);
+    formData.append('entry.2118205607', message);
 
     try {
       const response = await fetch(formUrl, {
@@ -51,6 +51,7 @@ const FeedbackScreen: React.FC = () => {
         placeholder="Seu Nome (opcional)"
         value={name}
         onChangeText={setName}
+        placeholderTextColor="#A0A0A0"
       />
       <TextInput
         style={styles.input}
@@ -58,6 +59,7 @@ const FeedbackScreen: React.FC = () => {
         value={email}
         onChangeText={setEmail}
         keyboardType="email-address"
+        placeholderTextColor="#A0A0A0"
       />
       <TextInput
         style={[styles.input, styles.textArea]}
@@ -65,6 +67,7 @@ const FeedbackScreen: React.FC = () => {
         value={message}
         onChangeText={setMessage}
         multiline
+        placeholderTextColor="#A0A0A0"
       />
 
       <TouchableOpacity style={styles.button} onPress={handleSendFeedback}>
@@ -81,34 +84,42 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
     justifyContent: 'center',
-    backgroundColor: '#f0f4f8',
+    backgroundColor: '#E7F6EF',
   },
   title: {
-    fontSize: 20,
+    fontSize: 22,
     fontWeight: 'bold',
     marginBottom: 20,
     textAlign: 'center',
+    color: '#1E7C58',
   },
   input: {
     borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 8,
-    padding: 10,
+    borderColor: '#1E7C58',
+    borderRadius: 10,
+    padding: 12,
     marginBottom: 15,
+    backgroundColor: '#FFF',
+    fontSize: 16,
   },
   textArea: {
-    height: 100,
+    height: 120,
     textAlignVertical: 'top',
   },
   button: {
-    backgroundColor: '#2563eb',
+    backgroundColor: '#1E7C58',
     padding: 15,
-    borderRadius: 8,
+    borderRadius: 10,
     alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+    elevation: 3,
   },
   buttonText: {
     color: 'white',
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: 'bold',
   },
 });

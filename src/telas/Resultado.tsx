@@ -9,7 +9,7 @@ import type { Route_PerguntasRespostas } from '../interfaces/Perguntas';
 import { resultados } from '../perguntasHEHE/perguntas';
 
 const { width } = Dimensions.get('window');
-const ITEM_WIDTH = width * 0.65; // Ajustado para 60% da largura da tela
+const ITEM_WIDTH = width * 0.65;
 const ITEM_HEIGHT = 200;
 
 const ResultScreen: React.FC<{ route: Route_PerguntasRespostas }> = ({ route }) => {
@@ -25,29 +25,28 @@ const ResultScreen: React.FC<{ route: Route_PerguntasRespostas }> = ({ route }) 
   }, [resultadoId]);
 
   return (
-    <Center flex={1} bg="gray.100" p={4}>
+    <Center flex={1} bg="#E7F6EF" p={4}>
       <Box
         w="100%"
         maxW="95%"
         p={6}
         bg="white"
-        borderRadius="lg"
-        borderColor="blue.100"
+        borderRadius={15}
+        borderColor="#1E7C58"
         borderWidth={1}
         shadow={5}
       >
         <VStack space={4} alignItems="center">
-          <Text fontSize="2xl" fontWeight="bold" color="blue.800" textAlign="center">
+          <Text fontSize="2xl" fontWeight="bold" color="#1E7C58" textAlign="center">
             Tecnologias Recomendadas
           </Text>
-          <Divider my={4} bg="blue.300" />
+          <Divider my={4} bg="#1E7C58" />
           {result.length > 0 ? (
             <FlatList
               data={result}
               horizontal
               showsHorizontalScrollIndicator={false}
               snapToAlignment="center"
-              // snapToInterval={ITEM_WIDTH + 16}
               decelerationRate="fast"
               contentContainerStyle={styles.carouselContainer}
               keyExtractor={(item, index) => `${item}-${index}`}
@@ -57,31 +56,30 @@ const ResultScreen: React.FC<{ route: Route_PerguntasRespostas }> = ({ route }) 
                   h={ITEM_HEIGHT}
                   justifyContent="center"
                   alignItems="center"
-                  bg="blue.50"
-                  borderRadius="md"
+                  bg="rgba(56, 161, 105, 0.8)"
+                  borderRadius={15}
                   borderWidth={1}
-                  borderColor="blue.200"
-                  shadow={2}
+                  borderColor="#1E7C58"
                   p={4}
                   m={2}
                 >
                   <Text
                     fontSize="lg"
                     fontWeight="bold"
-                    color="blue.700"
+                    color="#FFF"
                     textAlign="center"
-                    numberOfLines={3} // Permite que o texto quebre em até 3 linhas
-                    ellipsizeMode="tail" // Adiciona reticências se o texto ultrapassar o limite
+                    numberOfLines={3}
+                    ellipsizeMode="tail"
                   >
                     {item}
                   </Text>
                   <Button
                     onPress={() => navigation.navigate('Detalhes', { tecnologiaId: item })}
-                    colorScheme="blue"
+                    colorScheme="green"
                     mt={6}
                     w="60%"
                     _text={{ fontSize: 'lg', fontWeight: 'bold' }}
-                    _pressed={{ bg: 'blue.700' }}
+                    _pressed={{ bg: '#1E7C58' }}
                   >
                     Detalhes
                   </Button>
@@ -89,17 +87,17 @@ const ResultScreen: React.FC<{ route: Route_PerguntasRespostas }> = ({ route }) 
               )}
             />
           ) : (
-            <Text fontSize="md" color="gray.500" textAlign="center">
+            <Text fontSize="md" color="#374151" textAlign="center">
               Nenhuma tecnologia recomendada.
             </Text>
           )}
           <Button
             onPress={() => navigation.navigate('Home')}
-            colorScheme="blue"
+            colorScheme="green"
             mt={6}
             w="75%"
             _text={{ fontSize: 'lg', fontWeight: 'bold' }}
-            _pressed={{ bg: 'blue.700' }}
+            _pressed={{ bg: '#1E7C58' }}
           >
             Voltar para Início
           </Button>

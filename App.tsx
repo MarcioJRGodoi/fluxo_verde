@@ -17,14 +17,13 @@ import FeedbackScreen from './src/telas/Feedback';
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
 
-// Stack Navigator para a navegação geral (Home e Questionário)
 const MainStack = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen
         name="Home"
         component={Home}
-        options={{ headerShown: false }} // Oculta o cabeçalho na tela inicial
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="Questionario"
@@ -62,23 +61,15 @@ const MainStack = () => {
         name="Implementacao"
         component={Implementacao}
         options={{
-          title: 'Implementacao',
+          title: 'Implementação',
           headerShown: false
         }}
       />
-      {/* <Stack.Screen
-        name="PanoramaViewer"
-        component={PanoramaViewer}
-        options={{
-          title: 'PanoramaViewer',
-          headerShown: false
-        }}
-      /> */}
       <Stack.Screen
         name="ThreeDViewer"
         component={ThreeDViewer}
         options={{
-          title: 'ThreeDViewer',
+          title: '3D Viewer',
           headerShown: false
         }}
       />
@@ -92,24 +83,24 @@ const MainStack = () => {
       />
     </Stack.Navigator>
   );
-}
+};
 
 const customTheme = extendTheme({
   colors: {
     primary: {
-      50: '#e0f7fa',
-      100: '#b2ebf2',
-      200: '#80deea',
-      300: '#4dd0e1',
-      400: '#26c6da',
-      500: '#00bcd4',
-      600: '#00acc1',
-      700: '#0097a7',
-      800: '#00838f',
-      900: '#006064',
+      50: '#E7F6EF',
+      100: '#C3E6D8',
+      200: '#9FD6C2',
+      300: '#7BC6AB',
+      400: '#58B695',
+      500: '#34A67E',
+      600: '#1E7C58',
+      700: '#166044',
+      800: '#0F4330',
+      900: '#07271C',
     },
     secondary: {
-      500: '#ff4081', // Para destacar ações importantes
+      500: '#F9A825',
     },
   },
   components: {
@@ -151,28 +142,20 @@ const App = () => {
           initialRouteName="HomeDrawer"
           screenOptions={{
             drawerStyle: {
-              backgroundColor: '#e0f7fa',
+              backgroundColor: '#E7F6EF',
               paddingTop: 16,
             },
             headerStyle: {
-              backgroundColor: '#00acc1',
+              backgroundColor: '#34A67E',
             },
             headerTintColor: '#fff',
-            drawerActiveTintColor: '#00bcd4',
-            drawerInactiveTintColor: '#006064',
+            drawerActiveTintColor: '#1E7C58',
+            drawerInactiveTintColor: '#0F4330',
           }}
         >
-          <Drawer.Screen name="HomeDrawer" component={MainStack} options={{ title: 'Inicio' }} />
-          {/* <Drawer.Screen
-            name="Questionario"
-            component={Questionario}
-            options={{ title: 'Questionario' }}
-            initialParams={{ perguntaId: "TemDisponibilidadeHídrica" }}
-          /> */}
+          <Drawer.Screen name="HomeDrawer" component={MainStack} options={{ title: 'Início' }} />
           <Drawer.Screen name="Duvidas" component={Duvidas} options={{ title: 'Sobre' }} />
-
           <Drawer.Screen name="Feedback" component={FeedbackScreen} options={{ title: 'Feedback' }} />
-
         </Drawer.Navigator>
       </NavigationContainer>
     </NativeBaseProvider>

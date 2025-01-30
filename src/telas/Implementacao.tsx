@@ -1,5 +1,5 @@
 import type React from 'react';
-import { Box, Text, SectionList, VStack, Heading, Divider } from 'native-base';
+import { Box, Text, VStack, Heading, Divider, ScrollView } from 'native-base';
 import type { Route_Detalhes, Tecnologias } from '../interfaces/Perguntas';
 import { descricaoTecnologiasDetalhada } from '../interfaces/Detalhes';
 
@@ -11,8 +11,8 @@ const Implementacao: React.FC<{ route: Route_Detalhes }> = ({ route }) => {
 
   if (!detalhes) {
     return (
-      <Box p={6} alignItems="center">
-        <Text color="red.500" fontSize="lg">
+      <Box flex={1} justifyContent="center" alignItems="center" bg="#E7F6EF" p={6}>
+        <Text color="red.600" fontSize="lg" fontWeight="bold">
           Detalhes da tecnologia não encontrados
         </Text>
       </Box>
@@ -21,39 +21,38 @@ const Implementacao: React.FC<{ route: Route_Detalhes }> = ({ route }) => {
 
   const { comoImplementar, oQuePrecisa } = detalhes;
 
-  const sections = [
-    { title: 'Como Implementar', data: comoImplementar },
-    { title: 'O Que Precisa', data: oQuePrecisa },
-  ];
-
   return (
-    <SectionList
-      sections={sections}
-      keyExtractor={(item, index) => `${item}-${index}`}
-      renderSectionHeader={({ section: { title } }) => (
-        <Box p={4} backgroundColor="gray.200">
-          <Heading size="md" color="secondary.500" mb={2}>
-            {title}
-          </Heading>
-          <Divider />
-        </Box>
-      )}
-      renderItem={({ item }) => (
-        <Box p={4}>
-          <Text fontSize="md" color="gray.700">
+    <ScrollView flex={1} bg="#E7F6EF" p={6}>
+      <Heading size="xl" color="#1E7C58" mb={6} textAlign="center">
+        {tecnologia}
+      </Heading>
+
+      <Box bg="#C3E6D0" p={4} borderRadius={12} mb={4} shadow={2} marginBottom={10}>
+        <Heading size="md" color="#1E7C58" mb={2}>
+          Como Implementar
+        </Heading>
+        <Divider bg="#1E7C58" mb={2} />
+        {comoImplementar.map((item, index) => (
+          // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+          <Text key={index} fontSize="md" color="#374151" mb={2}>
             • {item}
           </Text>
-        </Box>
-      )}
-      ListHeaderComponent={
-        <Box p={6}>
-          <Heading size="xl" mb={4} color="primary.500">
-            {tecnologia}
-          </Heading>
-        </Box>
-      }
-      ListFooterComponent={<Box height={4} />} // Adiciona espaço ao final
-    />
+        ))}
+      </Box>
+
+      <Box bg="#C3E6D0" p={4} borderRadius={12} shadow={2} marginBottom={20}>
+        <Heading size="md" color="#1E7C58" mb={2}>
+          O Que Precisa
+        </Heading>
+        <Divider bg="#1E7C58" mb={2} />
+        {oQuePrecisa.map((item, index) => (
+          // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+          <Text key={index} fontSize="md" color="#374151" mb={2}>
+            • {item}
+          </Text>
+        ))}
+      </Box>
+    </ScrollView>
   );
 };
 

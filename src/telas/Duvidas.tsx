@@ -16,25 +16,27 @@ const Duvidas: React.FC = () => {
   const windowWidth = Dimensions.get('window').width;
   const windowHeight = Dimensions.get('window').height;
 
-  const slideSize = Math.min(windowWidth * 0.8, windowHeight * 0.5); // Quadrado proporcional à tela
+  const slideSize = Math.min(windowWidth * 0.85, windowHeight * 0.5); // Ajuste para melhor proporção
 
   const handleScroll = (event: { nativeEvent: { contentOffset: { x: number } } }) => {
     const contentOffsetX = event.nativeEvent.contentOffset.x;
-    const newIndex = Math.round(contentOffsetX / slideSize); // Baseado no tamanho do quadrado
+    const newIndex = Math.round(contentOffsetX / slideSize);
     setSlideIndex(newIndex);
   };
 
   return (
-    <Center flex={1} bg="gray.50" p={6}>
+    <Center flex={1} bg="#E7F6EF" p={6}>
       <Box
         w={`${slideSize}px`}
         h={`${slideSize}px`}
-        maxW="400px"
-        maxH="400px"
+        maxW="420px"
+        maxH="420px"
         bg="white"
-        borderRadius="xl"
-        shadow={7}
+        borderRadius={20}
+        shadow={5}
         overflow="hidden"
+        justifyContent="center"
+        alignItems="center"
       >
         <FlatList
           data={slides}
@@ -45,13 +47,13 @@ const Duvidas: React.FC = () => {
           onScroll={handleScroll}
           renderItem={({ item }) => (
             <VStack
-              width={slideSize} // Garante que cada slide seja do mesmo tamanho
+              width={slideSize}
               height={slideSize}
               justifyContent="center"
               alignItems="center"
               p={6}
             >
-              <Text fontSize="lg" textAlign="center" color="gray.600">
+              <Text fontSize="lg" textAlign="center" color="#1E7C58" fontWeight="bold">
                 {item}
               </Text>
             </VStack>
@@ -60,14 +62,15 @@ const Duvidas: React.FC = () => {
       </Box>
 
       {/* Indicador de página */}
-      <HStack justifyContent="center" mt={4} space={2}>
+      <HStack justifyContent="center" mt={5} space={3}>
         {slides.map((_, index) => (
           <Pressable
-            key={_}
-            w={3}
-            h={3}
+            // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+            key={index}
+            w={4}
+            h={4}
             borderRadius="full"
-            bg={slideIndex === index ? 'blue.500' : 'gray.300'}
+            bg={slideIndex === index ? '#1E7C58' : 'gray.400'}
           />
         ))}
       </HStack>

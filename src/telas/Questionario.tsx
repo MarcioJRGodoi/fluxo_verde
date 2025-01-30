@@ -1,7 +1,7 @@
 import type React from 'react';
 import { useState, useEffect, useRef } from 'react';
 import { Animated, Easing } from 'react-native';
-import { Box, Text, Button, VStack, Center, Spinner } from 'native-base';
+import { Box, Text, Button, VStack, Center, Spinner, HStack } from 'native-base';
 import { useNavigation } from '@react-navigation/native';
 import { type Pergunta, perguntas } from '../perguntasHEHE/perguntas';
 import type { Telas } from '../interfaces/Telas';
@@ -12,8 +12,8 @@ const Questionario: React.FC<{ route: Route_PerguntasRespostas }> = ({ route }) 
   const navigation = useNavigation<StackNavigationProp<Telas>>();
   const [currentQuestion, setCurrentQuestion] = useState<Pergunta>();
   const { perguntaId } = route.params as unknown as { perguntaId: keyof typeof perguntas };
-  const fadeAnim = useRef(new Animated.Value(0)).current;
-  const slideAnim = useRef(new Animated.Value(50)).current; // Posição inicial para o efeito de deslizar
+  const scaleAnim = useRef(new Animated.Value(0.8)).current;
+  const opacityAnim = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
     const question = perguntas[perguntaId];
@@ -23,17 +23,18 @@ const Questionario: React.FC<{ route: Route_PerguntasRespostas }> = ({ route }) 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     Animated.parallel([
-      Animated.timing(fadeAnim, {
+      Animated.timing(scaleAnim, {
         toValue: 1,
-        duration: 500,
+        duration: 300,
+        easing: Easing.out(Easing.ease),
         useNativeDriver: true,
       }),
-      Animated.timing(slideAnim, {
-        toValue: 0,
-        duration: 500,
-        easing: Easing.inOut(Easing.ease),
+      Animated.timing(opacityAnim, {
+        toValue: 1,
+        duration: 300,
+        easing: Easing.out(Easing.ease),
         useNativeDriver: true,
-      })
+      }),
     ]).start();
   }, [currentQuestion]);
 
@@ -43,17 +44,43 @@ const Questionario: React.FC<{ route: Route_PerguntasRespostas }> = ({ route }) 
     if (currentQuestion?.[answer].startsWith('resultado')) {
       navigation.navigate('Resultado', { resultadoId: nextQuestionId });
     } else {
-      fadeAnim.setValue(0);
-      slideAnim.setValue(50); // Redefine a posição para o efeito de deslizar
-      navigation.navigate('Questionario', { perguntaId: nextQuestionId });
+      Animated.parallel([
+        Animated.timing(scaleAnim, {
+          toValue: 0.8,
+          duration: 200,
+          easing: Easing.in(Easing.ease),
+          useNativeDriver: true,
+        }),
+        Animated.timing(opacityAnim, {
+          toValue: 0,
+          duration: 200,
+          easing: Easing.in(Easing.ease),
+          useNativeDriver: true,
+        }),
+      ]).start(() => {
+        navigation.navigate('Questionario', { perguntaId: nextQuestionId });
+      });
     }
   };
 
   // funcao que volta para primeira pergunta
   const resetar = () => {
-    fadeAnim.setValue(0);
-    slideAnim.setValue(50); // Redefine a posição para o efeito de deslizar
-    navigation.navigate('Questionario', { perguntaId: "TemDisponibilidadeHídrica" });
+    Animated.parallel([
+      Animated.timing(scaleAnim, {
+        toValue: 0.8,
+        duration: 200,
+        easing: Easing.in(Easing.ease),
+        useNativeDriver: true,
+      }),
+      Animated.timing(opacityAnim, {
+        toValue: 0,
+        duration: 200,
+        easing: Easing.in(Easing.ease),
+        useNativeDriver: true,
+      }),
+    ]).start(() => {
+      navigation.navigate('Questionario', { perguntaId: "TemDisponibilidadeHídrica" });
+    });
   }
 
   if (!currentQuestion) {
@@ -68,45 +95,54 @@ const Questionario: React.FC<{ route: Route_PerguntasRespostas }> = ({ route }) 
   }
 
   return (
-    <Center flex={1} bg="gray.50" p={6}>
-      <Animated.View style={{
-        opacity: fadeAnim,
-        transform: [{ translateY: slideAnim }], // Animação combinada de opacidade e movimento vertical
-        width: "100%",
-        alignItems: "center"
-      }}>
-        <Box w="90%" maxW="400px" p={8} bg="white" borderRadius="xl" shadow={7}>
-          <VStack space={6} alignItems="center">
-            <Text fontSize="2xl" fontWeight="bold" color="blue.800" textAlign="center">
-              {currentQuestion.pergunta}
-            </Text>
+    <Center flex={1} bg="#E7F6EF" px={4}>
+      <Animated.View
+        style={{
+          transform: [{ scale: scaleAnim }],
+          opacity: opacityAnim,
+          width: '100%',
+          alignItems: 'center',
+        }}
+      >
+        <VStack space={6} alignItems="center">
+          <Text fontSize="xl" fontWeight="bold" color="#1E7C58" textAlign="center">
+            {currentQuestion.pergunta}
+          </Text>
+          <HStack justifyContent="space-between" w="80%">
             <Button
               onPress={() => handleAnswer('sim')}
-              colorScheme="teal"
-              w="100%"
-              h="50px"
+              bg="#38A169"
               borderRadius="full"
-              _text={{ fontSize: "lg", fontWeight: "bold" }}
-              shadow={2}
-              _pressed={{ bg: "teal.600" }}
+              px={8}
+              _text={{ fontSize: "lg", color: "#FFF", fontWeight: "bold" }}
+              _pressed={{ bg: "#2F855A" }}
             >
               Sim
             </Button>
             <Button
               onPress={() => handleAnswer('nao')}
-              colorScheme="amber"
-              w="100%"
-              h="50px"
+              bg="#F6AD55"
               borderRadius="full"
-              _text={{ fontSize: "lg", fontWeight: "bold" }}
-              shadow={2}
-              _pressed={{ bg: "amber.700" }}
+              px={8}
+              _text={{ fontSize: "lg", color: "#FFF", fontWeight: "bold" }}
+              _pressed={{ bg: "#DD6B20" }}
             >
               Não
             </Button>
-          </VStack>
-        </Box>
+          </HStack>
+        </VStack>
       </Animated.View>
+      <Box position="absolute" bottom={8} w="80%">
+        <Button
+          onPress={resetar}
+          bg="#1E7C58"
+          borderRadius="md"
+          _text={{ fontSize: "sm", color: "#FFF", fontWeight: "bold" }}
+          _pressed={{ bg: "#166746" }}
+        >
+          Voltar
+        </Button>
+      </Box>
     </Center>
   );
 };
