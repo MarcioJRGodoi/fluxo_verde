@@ -12,6 +12,7 @@ import Detalhes from './src/telas/Detalhes';
 import Imagens from './src/telas/Imagens';
 import Implementacao from './src/telas/Implementacao';
 import ThreeDViewer from './src/telas/ThreeDViewer';
+import FeedbackScreen from './src/telas/Feedback';
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
@@ -78,6 +79,14 @@ const MainStack = () => {
         component={ThreeDViewer}
         options={{
           title: 'ThreeDViewer',
+          headerShown: false
+        }}
+      />
+      <Stack.Screen
+        name="Feedback"
+        component={FeedbackScreen}
+        options={{
+          title: 'Feedback',
           headerShown: false
         }}
       />
@@ -161,6 +170,8 @@ const App = () => {
             initialParams={{ perguntaId: "TemDisponibilidadeHídrica" }}
           /> */}
           <Drawer.Screen name="Duvidas" component={Duvidas} options={{ title: 'Sobre' }} />
+
+          <Drawer.Screen name="Feedback" component={FeedbackScreen} options={{ title: 'Feedback' }} />
 
         </Drawer.Navigator>
       </NavigationContainer>
