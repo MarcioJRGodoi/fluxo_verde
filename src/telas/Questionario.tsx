@@ -11,17 +11,19 @@ import type { Perguntas, Route_PerguntasRespostas } from '../interfaces/Pergunta
 const Questionario: React.FC<{ route: Route_PerguntasRespostas }> = ({ route }) => {
   const navigation = useNavigation<StackNavigationProp<Telas>>();
   const [currentQuestion, setCurrentQuestion] = useState<Pergunta>();
-  const { perguntaId } = route.params as unknown as { perguntaId: keyof typeof perguntas };
+  const { perguntaId } = route.params;
+  const [historicoPerguntas, setHistoricoPerguntas] = useState<(keyof typeof Perguntas)[]>([]); // Histórico das perguntas respondidas
   const scaleAnim = useRef(new Animated.Value(0.8)).current;
   const opacityAnim = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
-    const question = perguntas[perguntaId];
+    const question = perguntaId !== undefined ? perguntas[perguntaId] : undefined;
     setCurrentQuestion(question);
   }, [perguntaId]);
 
+  // Animação para transição entre perguntas
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
-  useEffect(() => {
+    useEffect(() => {
     Animated.parallel([
       Animated.timing(scaleAnim, {
         toValue: 1,
@@ -41,6 +43,11 @@ const Questionario: React.FC<{ route: Route_PerguntasRespostas }> = ({ route }) 
   const handleAnswer = (answer: 'sim' | 'nao') => {
     const nextQuestionId = currentQuestion ? currentQuestion[answer] as keyof typeof Perguntas : "TemDisponibilidadeHídrica" as keyof typeof Perguntas;
 
+    // Armazena a pergunta atual no histórico antes de avançar
+    if (perguntaId !== undefined) {
+      setHistoricoPerguntas(prev => [...prev, perguntaId]);
+    }
+
     if (currentQuestion?.[answer].startsWith('resultado')) {
       navigation.navigate('Resultado', { resultadoId: nextQuestionId });
     } else {
@@ -58,30 +65,40 @@ const Questionario: React.FC<{ route: Route_PerguntasRespostas }> = ({ route }) 
           useNativeDriver: true,
         }),
       ]).start(() => {
-        navigation.navigate('Questionario', { perguntaId: nextQuestionId });
+        navigation.navigate('Questionario', { perguntaId: nextQuestionId, perguntaIdAnterior: perguntaId });
       });
     }
   };
 
-  // funcao que volta para primeira pergunta
-  const resetar = () => {
-    Animated.parallel([
-      Animated.timing(scaleAnim, {
-        toValue: 0.8,
-        duration: 200,
-        easing: Easing.in(Easing.ease),
-        useNativeDriver: true,
-      }),
-      Animated.timing(opacityAnim, {
-        toValue: 0,
-        duration: 200,
-        easing: Easing.in(Easing.ease),
-        useNativeDriver: true,
-      }),
-    ]).start(() => {
-      navigation.navigate('Questionario', { perguntaId: "TemDisponibilidadeHídrica" });
-    });
-  }
+  // Função para voltar para a pergunta anterior
+  const voltarPergunta = () => {
+    if (historicoPerguntas.length > 0) {
+      const perguntaAnterior = historicoPerguntas[historicoPerguntas.length - 1];
+      const novoHistorico = historicoPerguntas.slice(0, -1); // Remove a última pergunta do histórico
+
+      // Atualiza o histórico e navega para a pergunta anterior
+      setHistoricoPerguntas(novoHistorico);
+      Animated.parallel([
+        Animated.timing(scaleAnim, {
+          toValue: 0.8,
+          duration: 200,
+          easing: Easing.in(Easing.ease),
+          useNativeDriver: true,
+        }),
+        Animated.timing(opacityAnim, {
+          toValue: 0,
+          duration: 200,
+          easing: Easing.in(Easing.ease),
+          useNativeDriver: true,
+        }),
+      ]).start(() => {
+        navigation.navigate('Questionario', { perguntaId: perguntaAnterior, perguntaIdAnterior: undefined });
+      });
+    } else {
+      // Caso o histórico esteja vazio, volta para a primeira pergunta
+      navigation.navigate('Questionario', { perguntaId: "TemDisponibilidadeHídrica", perguntaIdAnterior: undefined });
+    }
+  };
 
   if (!currentQuestion) {
     return (
@@ -134,7 +151,7 @@ const Questionario: React.FC<{ route: Route_PerguntasRespostas }> = ({ route }) 
       </Animated.View>
       <Box position="absolute" bottom={8} w="80%">
         <Button
-          onPress={resetar}
+          onPress={voltarPergunta}  // Função de voltar para a pergunta anterior
           bg="#1E7C58"
           borderRadius="md"
           _text={{ fontSize: "sm", color: "#FFF", fontWeight: "bold" }}

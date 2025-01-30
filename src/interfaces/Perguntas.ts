@@ -56,6 +56,7 @@ export interface Route_PerguntasRespostas {
     params: {
         perguntaId?: keyof typeof Perguntas;
         resultadoId?: keyof typeof Respostas;
+        perguntaIdAnterior?: keyof typeof Perguntas;
     };
 }
 
