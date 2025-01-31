@@ -21,7 +21,7 @@ const Detalhes: React.FC<{ route: Route_Detalhes }> = ({ route }) => {
 
   // Funções de placeholder
   const verImagens = () => navigation.navigate("Imagens", { tecnologiaId: tecnologia });
-  const visualizacao3D = () => navigation.navigate("ThreeDViewer");
+  const visualizacao3D = () => navigation.navigate("Visao3D");
   const visualizacaoVR_AR = () => navigation.navigate("PanoramaViewer", { tecnologiaId: tecnologia });
   const explicacaoDetalhada = () => navigation.navigate("Implementacao", { tecnologiaId: tecnologia });
 
@@ -60,9 +60,9 @@ const Detalhes: React.FC<{ route: Route_Detalhes }> = ({ route }) => {
               >
                 Ver Imagens
               </Button>
-              {/* <Button onPress={visualizacao3D} {...buttonStyle}>
+              <Button onPress={visualizacao3D} {...buttonStyle}>
                 Visualização 3D
-              </Button> */}
+              </Button>
             </HStack>
             <HStack space={2} w="100%" justifyContent="center">
               {/* <Button onPress={visualizacaoVR_AR} {...buttonStyle}>

@@ -11,7 +11,7 @@ import Duvidas from './src/telas/Duvidas';
 import Detalhes from './src/telas/Detalhes';
 import Imagens from './src/telas/Imagens';
 import Implementacao from './src/telas/Implementacao';
-import ThreeDViewer from './src/telas/ThreeDViewer';
+import Visao3D from './src/telas/Visao3D';
 import FeedbackScreen from './src/telas/Feedback';
 
 const Drawer = createDrawerNavigator();
@@ -66,8 +66,8 @@ const MainStack = () => {
         }}
       />
       <Stack.Screen
-        name="ThreeDViewer"
-        component={ThreeDViewer}
+        name="Visao3D"
+        component={Visao3D}
         options={{
           title: '3D Viewer',
           headerShown: false

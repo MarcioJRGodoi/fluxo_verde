@@ -9,6 +9,6 @@ export type Telas = {
     Imagens: { tecnologiaId: string } | undefined;
     Implementacao: { tecnologiaId: string } | undefined;
     PanoramaViewer: { tecnologiaId: string } | undefined;
-    ThreeDViewer:  undefined;
+    Visao3D: undefined;
   };
   
