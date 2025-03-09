@@ -13,6 +13,9 @@ import Imagens from './src/telas/Imagens';
 import Implementacao from './src/telas/Implementacao';
 import Visao3D from './src/telas/Visao3D';
 import FeedbackScreen from './src/telas/Feedback';
+import ExportarResultados from './src/telas/ExportarResultados';
+import {SQLiteProvider} from "expo-sqlite"
+import { Db } from './src/db/sqlite';
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
@@ -81,6 +84,14 @@ const MainStack = () => {
           headerShown: false
         }}
       />
+      <Stack.Screen
+        name="Resultados"
+        component={ExportarResultados}
+        options={{
+          title: 'Resultados',
+          headerShown: false
+        }}
+      />
     </Stack.Navigator>
   );
 };
@@ -136,6 +147,8 @@ const customTheme = extendTheme({
 
 const App = () => {
   return (
+    <>
+    <SQLiteProvider databaseName='sql.db' onInit={Db}>
     <NativeBaseProvider theme={customTheme}>
       <NavigationContainer>
         <Drawer.Navigator
@@ -156,9 +169,13 @@ const App = () => {
           <Drawer.Screen name="HomeDrawer" component={MainStack} options={{ title: 'Início' }} />
           <Drawer.Screen name="Duvidas" component={Duvidas} options={{ title: 'Sobre' }} />
           <Drawer.Screen name="Feedback" component={FeedbackScreen} options={{ title: 'Feedback' }} />
+          <Drawer.Screen name="Resultados Salvos" component={ExportarResultados} options={{ title: 'Resultados Salvos' }} />
         </Drawer.Navigator>
       </NavigationContainer>
     </NativeBaseProvider>
+    </SQLiteProvider>
+    </>
+
   );
 };
 

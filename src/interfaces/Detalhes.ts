@@ -1,11 +1,7 @@
 import { Tecnologias } from "./Perguntas";
+import type { Detalhes, DetalhesImagens } from "./tipos";
 
-export const descricaoTecnologiasDetalhada: Record<Tecnologias, {
-    descricaoCurta: string;
-    descricaoDetalhada: string;
-    comoImplementar: string[];
-    oQuePrecisa: string[];
-}> = {
+export const descricaoTecnologiasDetalhada: Detalhes = {
     [Tecnologias.Biodigestor]: {
         descricaoCurta: "Transforma lixo orgânico em gás para cozinhar e fertilizante.",
         descricaoDetalhada: "O biodigestor é como uma 'máquina mágica' que transforma restos de comida e fezes em gás de cozinha e fertilizante natural. Ele usa bactérias para fazer isso de forma natural e sem cheiro forte.",
@@ -205,7 +201,7 @@ export const descricaoTecnologiasDetalhada: Record<Tecnologias, {
 
 
 // Mapeamento de tecnologias para arrays de caminhos de imagem
-export const tecnologiaImagens: Record<Tecnologias, string[]> = {
+export const tecnologiaImagens: DetalhesImagens = {
     [Tecnologias.Biodigestor]: [
         require("../images/BIODIGESTOR-2021-scaled.jpg"),
         require("../images/Biodigestor.png"),

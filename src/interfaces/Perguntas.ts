@@ -17,9 +17,7 @@ export enum Tecnologias {
 }
 
 
-export interface resultado {
-    resultado: Tecnologias[]; // Lista de tecnologias recomendadas
-}
+
 
 
 export enum Perguntas {

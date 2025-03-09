@@ -45,7 +45,7 @@ const Questionario: React.FC<{ route: Route_PerguntasRespostas }> = ({ route }) 
 
     // Armazena a pergunta atual no histórico antes de avançar
     if (perguntaId !== undefined) {
-      setHistoricoPerguntas(prev => [...prev, perguntaId]);
+      setHistoricoPerguntas((prev) => [...prev, perguntaId]);
     }
 
     if (currentQuestion?.[answer].startsWith('resultado')) {

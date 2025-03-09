@@ -7,6 +7,7 @@ import type { StackNavigationProp } from '@react-navigation/stack';
 import type { Telas } from '../interfaces/Telas';
 import type { Route_PerguntasRespostas } from '../interfaces/Perguntas';
 import { resultados } from '../perguntasHEHE/perguntas';
+import database from '../db/sqlite';
 
 const { width } = Dimensions.get('window');
 const ITEM_WIDTH = width * 0.65;
@@ -19,10 +20,16 @@ const ResultScreen: React.FC<{ route: Route_PerguntasRespostas }> = ({ route }) 
 
   useEffect(() => {
     if (resultadoId !== undefined) {
-      const resultTechnologies = resultados[resultadoId]?.resultado || [];
+      const resultTechnologies = resultados[resultadoId]?.tecnologias || [];
       setResult(resultTechnologies);
     }
   }, [resultadoId]);
+
+  const SalvarResultado = async () => {
+    await database.collections.get('resultados').create((newResultado) => {
+      newResultado.resultado = ""
+    });
+  }
 
   return (
     <Center flex={1} bg="#E7F6EF" p={4}>

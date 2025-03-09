@@ -1,9 +1,10 @@
-import { Perguntas, type Respostas, type resultado, Tecnologias } from "../interfaces/Perguntas";
+import { Perguntas, type Respostas, Tecnologias } from "../interfaces/Perguntas";
+import type { Resultados } from "../interfaces/tipos";
 
 export interface Pergunta {
     pergunta: Perguntas;
-    sim: keyof typeof Respostas | keyof typeof Perguntas; // ID da próxima pergunta ou resultado
-    nao: keyof typeof Respostas | keyof typeof Perguntas;  // ID da próxima pergunta ou resultado
+    sim: keyof typeof Respostas | keyof typeof Perguntas; // ID da próxima pergunta ou tecnologias
+    nao: keyof typeof Respostas | keyof typeof Perguntas;  // ID da próxima pergunta ou tecnologias
 }
 
 export const perguntas: Record<keyof typeof Perguntas, Pergunta> = {
@@ -44,16 +45,16 @@ export const perguntas: Record<keyof typeof Perguntas, Pergunta> = {
     },
 };
 
-export const resultados: Record<keyof typeof Respostas, resultado> = {
-    resultado_Wetland_TanqueEvapotranspiracao: { resultado: [Tecnologias.Wetland, Tecnologias.TanqueEvapotranspiracao, Tecnologias.BiossistemaIntegrado] },
-    resultado_bananeira: { resultado: [Tecnologias.CicloDeBananeiras] },
-    resultado_wetland: { resultado: [Tecnologias.Wetland] },
-    resultado_fossaseca: { resultado: [Tecnologias.FossaSeca] },
-    resultado_compostagem: { resultado: [Tecnologias.BanheiroSecoCompostavel] },
-    resultado_biodigestor: { resultado: [Tecnologias.Biodigestor] },
-    resultado_tanqueseptico_reatorAnaerobioCompartilhado_ReatorAnaerobioDeFluxoAscendenteCompacto: { resultado: [Tecnologias.TanqueSeptico, Tecnologias.ReatorAnaerobioCompartilhado, Tecnologias.ReatorAnaerobioDeFluxoAscendenteCompacto] },
-    resultado_vermifiltro: { resultado: [Tecnologias.Vermifiltro] },
-    resultado_fossaSepticaBiodigestora: { resultado: [Tecnologias.FossaSeptivaBiodigestora] },
-    resultado_fossa_seca_Ciclo_babaneniras: { resultado: [Tecnologias.FossaSeca, Tecnologias.CicloDeBananeiras] },
-    resultado_estocagem_urina_banheiro_compostavel_wetland: { resultado: [Tecnologias.EstocagemDeUrina, Tecnologias.BanheiroSecoCompostavel, Tecnologias.Wetland] },
+export const resultados: Record<keyof typeof Respostas, Resultados> = {
+    resultado_Wetland_TanqueEvapotranspiracao: { tecnologias: [Tecnologias.Wetland, Tecnologias.TanqueEvapotranspiracao, Tecnologias.BiossistemaIntegrado] },
+    resultado_bananeira: { tecnologias: [Tecnologias.CicloDeBananeiras] },
+    resultado_wetland: { tecnologias: [Tecnologias.Wetland] },
+    resultado_fossaseca: { tecnologias: [Tecnologias.FossaSeca] },
+    resultado_compostagem: { tecnologias: [Tecnologias.BanheiroSecoCompostavel] },
+    resultado_biodigestor: { tecnologias: [Tecnologias.Biodigestor] },
+    resultado_tanqueseptico_reatorAnaerobioCompartilhado_ReatorAnaerobioDeFluxoAscendenteCompacto: { tecnologias: [Tecnologias.TanqueSeptico, Tecnologias.ReatorAnaerobioCompartilhado, Tecnologias.ReatorAnaerobioDeFluxoAscendenteCompacto] },
+    resultado_vermifiltro: { tecnologias: [Tecnologias.Vermifiltro] },
+    resultado_fossaSepticaBiodigestora: { tecnologias: [Tecnologias.FossaSeptivaBiodigestora] },
+    resultado_fossa_seca_Ciclo_babaneniras: { tecnologias: [Tecnologias.FossaSeca, Tecnologias.CicloDeBananeiras] },
+    resultado_estocagem_urina_banheiro_compostavel_wetland: { tecnologias: [Tecnologias.EstocagemDeUrina, Tecnologias.BanheiroSecoCompostavel, Tecnologias.Wetland] },
 };

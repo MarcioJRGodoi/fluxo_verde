@@ -27,6 +27,16 @@ const Home: React.FC = () => {
     checkFirstTime();
   }, []);
 
+  // useEffect(() => {
+  //   runMigrations().then(() => {
+  //     console.log('Migrações executadas com sucesso!');
+  //   }
+  //   ).catch((error) => {
+  //     console.error('Erro ao executar migrações:', error);
+  //   }
+  //   );
+  // },[])
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>
