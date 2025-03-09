@@ -14,3 +14,8 @@ export type Detalhes =  Record<Tecnologias, {
 
 export type DetalhesImagens = Record<Tecnologias, string[]>
 
+export type ExportarResultados = {
+    tecnologias: Tecnologias[];
+    detales: Detalhes;
+    detalhesImagens: DetalhesImagens;
+}

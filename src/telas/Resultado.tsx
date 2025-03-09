@@ -7,7 +7,7 @@ import type { StackNavigationProp } from '@react-navigation/stack';
 import type { Telas } from '../interfaces/Telas';
 import type { Route_PerguntasRespostas } from '../interfaces/Perguntas';
 import { resultados } from '../perguntasHEHE/perguntas';
-import database from '../db/sqlite';
+import { useResultadoDb } from '../db/Crud/useResultadoDb';
 
 const { width } = Dimensions.get('window');
 const ITEM_WIDTH = width * 0.65;
@@ -18,6 +18,12 @@ const ResultScreen: React.FC<{ route: Route_PerguntasRespostas }> = ({ route }) 
   const { resultadoId } = route.params;
   const [result, setResult] = useState<string[]>([]);
 
+
+
+
+  const funcoes = useResultadoDb()
+
+
   useEffect(() => {
     if (resultadoId !== undefined) {
       const resultTechnologies = resultados[resultadoId]?.tecnologias || [];
@@ -26,9 +32,13 @@ const ResultScreen: React.FC<{ route: Route_PerguntasRespostas }> = ({ route }) 
   }, [resultadoId]);
 
   const SalvarResultado = async () => {
-    await database.collections.get('resultados').create((newResultado) => {
-      newResultado.resultado = ""
-    });
+    const res = await funcoes.insert({ data: JSON.parse(JSON.stringify(result)) as any })
+    if (res.result.length > 0) {
+      alert("Resultado Salvo com Sucesso")
+    }
+    else {
+      alert("Erro ao Salvar Resultado")
+    }
   }
 
   return (
@@ -98,6 +108,16 @@ const ResultScreen: React.FC<{ route: Route_PerguntasRespostas }> = ({ route }) 
               Nenhuma tecnologia recomendada.
             </Text>
           )}
+          <Button
+            onPress={() => SalvarResultado()}
+            colorScheme="green"
+            mt={6}
+            w="75%"
+            _text={{ fontSize: 'lg', fontWeight: 'bold' }}
+            _pressed={{ bg: '#1E7C58' }}
+          >
+            Salvar Resultado
+          </Button>
           <Button
             onPress={() => navigation.navigate('Home')}
             colorScheme="green"

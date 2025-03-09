@@ -1,19 +1,29 @@
-import type React from 'react';
+import React from 'react';
 import { useState } from 'react';
 import { Box, Text, Button, VStack, Center, HStack } from 'native-base';
 import { Alert } from 'react-native';
 import * as Print from 'expo-print';
+import * as FileSystem from 'expo-file-system';
 import * as Sharing from 'expo-sharing';
+import { useResultadoDb } from '../db/Crud/useResultadoDb';
+import { Resultado } from '../db/Models/Resultado';
 
 const ExportarResultados: React.FC = () => {
   const [loading, setLoading] = useState(false);
+  const [resultados, setResultado] = useState<Resultado[]>([]);
 
-  // Dados de exemplo (substitua pelos seus resultados reais)
-  const resultados = [
-    { pergunta: 'Tem disponibilidade hídrica?', resposta: 'Sim' },
-    { pergunta: 'Tem solo fértil?', resposta: 'Não' },
-    { pergunta: 'Tem acesso a insumos?', resposta: 'Sim' },
-  ];
+  const funcoes = useResultadoDb();
+
+  // Carrega os dados ao iniciar o componente
+  React.useEffect(() => {
+    const fetchData = async () => {
+      const res = await funcoes.select();
+      console.log("RES", res);
+      setResultado(res);
+    };
+
+    fetchData();
+  }, []);
 
   // Função para gerar o conteúdo HTML do PDF
   const gerarHTML = () => {
@@ -22,8 +32,8 @@ const ExportarResultados: React.FC = () => {
         (resultado, index) => `
         <tr>
           <td style="padding: 8px; border: 1px solid #ccc;">${index + 1}</td>
-          <td style="padding: 8px; border: 1px solid #ccc;">${resultado.pergunta}</td>
-          <td style="padding: 8px; border: 1px solid #ccc;">${resultado.resposta}</td>
+          <td style="padding: 8px; border: 1px solid #ccc;">${resultado.resultados.join(', ')}</td>
+          <td style="padding: 8px; border: 1px solid #ccc;">${resultado.created_at}</td>
         </tr>
       `
       )
@@ -46,8 +56,8 @@ const ExportarResultados: React.FC = () => {
             <thead>
               <tr>
                 <th>#</th>
-                <th>Pergunta</th>
-                <th>Resposta</th>
+                <th>Resultados</th>
+                <th>Data</th>
               </tr>
             </thead>
             <tbody>
@@ -59,7 +69,7 @@ const ExportarResultados: React.FC = () => {
     `;
   };
 
-  // Função para gerar e exportar o PDF
+  // Função para gerar e salvar o PDF
   const exportarParaPDF = async () => {
     setLoading(true);
 
@@ -69,14 +79,26 @@ const ExportarResultados: React.FC = () => {
       // Gera o PDF a partir do HTML
       const { uri } = await Print.printToFileAsync({ html });
 
-      // Compartilha o PDF
-      await Sharing.shareAsync(uri, {
+      // Define o caminho onde o PDF será salvo
+      const pdfName = `Resultados_${Date.now()}.pdf`;
+      const newUri = `${FileSystem.documentDirectory}${pdfName}`;
+
+      // Copia o arquivo PDF para o diretório de documentos
+      await FileSystem.copyAsync({
+        from: uri,
+        to: newUri,
+      });
+
+      console.log("PDF salvo em:", newUri);
+
+      // Compartilha o PDF (opcional)
+      await Sharing.shareAsync(newUri, {
         mimeType: 'application/pdf',
         dialogTitle: 'Resultados do Questionário',
         UTI: 'com.adobe.pdf',
       });
 
-      Alert.alert('Sucesso', 'PDF gerado e compartilhado com sucesso!');
+      Alert.alert('Sucesso', 'PDF gerado e salvo com sucesso!');
     } catch (error) {
       console.error('Erro ao gerar PDF:', error);
       Alert.alert('Erro', 'Ocorreu um erro ao gerar o PDF.');
@@ -95,13 +117,12 @@ const ExportarResultados: React.FC = () => {
         <Box w="100%" bg="white" p={4} borderRadius="md" shadow={2}>
           <VStack space={4}>
             {resultados.map((resultado, index) => (
-              // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
-<HStack key={index} justifyContent="space-between">
+              <HStack key={index} justifyContent="space-between">
                 <Text fontSize="md" color="gray.700">
-                  {resultado.pergunta}
+                  {resultado.resultados.join(', ')}
                 </Text>
                 <Text fontSize="md" color="gray.700" fontWeight="bold">
-                  {resultado.resposta}
+                  {resultado.created_at}
                 </Text>
               </HStack>
             ))}

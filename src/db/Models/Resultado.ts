@@ -1,7 +1,7 @@
-export class Resultado {
-    private resultado: Resultado[];
+import { Tecnologias } from "../../interfaces/Perguntas"
 
-    constructor(resultado: Resultado[]) {
-        this.resultado = resultado;
-    }
+export type Resultado = {
+    id?: number
+    resultados: Tecnologias[]
+    created_at?: string
 }
