@@ -76,5 +76,23 @@ export const useResultadoDb = () => {
         }
     };
 
-    return { insert, select }
+    const deletar = async ({ id }: { id: number }) => {
+        try {
+            const sql = await db.prepareAsync(`
+                DELETE FROM resultados WHERE id = $id
+            `);
+
+            const res = await sql.executeAsync({
+                $id: id
+            });
+
+            console.log("Res: ", res);
+            return { result: res.changes }
+        } catch (error) {
+            console.log("Erro: ", error);
+            throw error;
+        }
+    }
+
+    return { insert, select, deletar }
 }

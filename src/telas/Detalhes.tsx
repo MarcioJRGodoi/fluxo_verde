@@ -60,9 +60,9 @@ const Detalhes: React.FC<{ route: Route_Detalhes }> = ({ route }) => {
               >
                 Ver Imagens
               </Button>
-              <Button onPress={visualizacao3D} {...buttonStyle}>
+              {/* <Button onPress={visualizacao3D} {...buttonStyle}>
                 Visualização 3D
-              </Button>
+              </Button> */}
             </HStack>
             <HStack space={2} w="100%" justifyContent="center">
               {/* <Button onPress={visualizacaoVR_AR} {...buttonStyle}>

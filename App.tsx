@@ -76,14 +76,14 @@ const MainStack = () => {
           headerShown: false
         }}
       />
-      <Stack.Screen
+      {/* <Stack.Screen
         name="Feedback"
         component={FeedbackScreen}
         options={{
           title: 'Feedback',
           headerShown: false
         }}
-      />
+      /> */}
       <Stack.Screen
         name="Resultados"
         component={ExportarResultados}
@@ -168,7 +168,7 @@ const App = () => {
         >
           <Drawer.Screen name="HomeDrawer" component={MainStack} options={{ title: 'Início' }} />
           <Drawer.Screen name="Duvidas" component={Duvidas} options={{ title: 'Sobre' }} />
-          <Drawer.Screen name="Feedback" component={FeedbackScreen} options={{ title: 'Feedback' }} />
+          {/* <Drawer.Screen name="Feedback" component={FeedbackScreen} options={{ title: 'Feedback' }} /> */}
           <Drawer.Screen name="Resultados Salvos" component={ExportarResultados} options={{ title: 'Resultados Salvos' }} />
         </Drawer.Navigator>
       </NavigationContainer>
