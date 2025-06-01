@@ -18,7 +18,7 @@ Antes de rodar o projeto, certifique-se de ter os seguintes softwares instalados
 
 
 # 1. Clone o repositório
-git clone https://github.com/seu-usuario/seu-repositorio.git
+git clone https://github.com/MarcioJRGodoi/fluxo_verde
 cd seu-repositorio
 
 # 2. Instale o Bun (caso não tenha)
@@ -41,7 +41,7 @@ bun run start
 ## 🪟 Instalação (Windows)
 
 :: 1. Clone o repositório
-git clone https://github.com/seu-usuario/seu-repositorio.git
+git clone https://github.com/MarcioJRGodoi/fluxo_verde
 cd seu-repositorio
 
 :: 2. Instale o Bun (requer WSL ou Node pré-instalado no Windows)
